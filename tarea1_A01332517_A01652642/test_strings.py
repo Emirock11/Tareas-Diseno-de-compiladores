@@ -16,6 +16,7 @@ assert email("example@com.") == False
 assert phone_number("+1 (52) 55 4433 2211") == True
 assert phone_number("+1(52)5544332211") == True
 assert phone_number("+1(52)554432211") == False
+assert phone_number("+1 (52) 5544 3322") == False
 assert phone_number("5544332211") == True
 
 assert hexadecimal("hexadecimal") == False
