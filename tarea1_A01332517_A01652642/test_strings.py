@@ -1,3 +1,9 @@
+'''
+    Emiliano Antonio Pineda Hernandez A01332517
+    Diego Aguilar Gutierrez A01652642
+    
+'''
+
 from myregex import email, phone_number, hexadecimal
 
 assert email("abdul@tec.mx") == True
