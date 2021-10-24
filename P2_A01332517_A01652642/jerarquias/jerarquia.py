@@ -20,7 +20,35 @@ class Grarquia(CoolListener):
     
     def salirClass(self, ctx: CoolParser.KlassContext):
         self.idsTypes.closeScope()
+
+    def ingresarAtribute(self, ctx: CoolParser.AtributeContext):
+        ID = ctx.ID().getText()
+        _type = ctx.TYPE().getText()
+
+        expr = ctx.expr()
+        if expr:
+            if hasattr(expr.getChild(0), 'ID'):
+                exprID = expr.getChild(0).ID().getText()
+                try:
+                    self.idsTypes[exprID]
+                except KeyError as e:
+                    raise myexceptions.UndeclaredIdentifier
     
+        try:
+            _klass = self.idsTypes.klass
+            _inherited = struct.lookupClass(_klass.inherits)
+            _found = _inherited.lookupAttribute(ID)
+            if _found != _type:
+                raise myexceptions.NotSupported
+        except KeyError:
+            pass
+
+        self.idsTypes[ID] = _type
+        self.idsTypes.openScope()
+    
+    def salirAtribute(self, ctx: CoolParser.AtributeContext):
+        self.idsTypes.closeScope()
+
     def ingresarMethod(self, ctx: CoolParser.MethodContext):
         metodo = ctx.ID().getText()
         _inherits = self.idsTypes.klass.inherits
@@ -69,34 +97,6 @@ class Grarquia(CoolListener):
             if not _typeKlass.conforms(exprKlass):
                 raise myexceptions.DoesNotConform
         
-        self.idsTypes.closeScope()
-    
-    def ingresarAtribute(self, ctx: CoolParser.AtributeContext):
-        ID = ctx.ID().getText()
-        _type = ctx.TYPE().getText()
-
-        expr = ctx.expr()
-        if expr:
-            if hasattr(expr.getChild(0), 'ID'):
-                exprID = expr.getChild(0).ID().getText()
-                try:
-                    self.idsTypes[exprID]
-                except KeyError as e:
-                    raise myexceptions.UndeclaredIdentifier
-    
-        try:
-            _klass = self.idsTypes.klass
-            _inherited = struct.lookupClass(_klass.inherits)
-            _found = _inherited.lookupAttribute(ID)
-            if _found != _type:
-                raise myexceptions.NotSupported
-        except KeyError:
-            pass
-
-        self.idsTypes[ID] = _type
-        self.idsTypes.openScope()
-    
-    def salirAtribute(self, ctx: CoolParser.AtributeContext):
         self.idsTypes.closeScope()
 
     def ingresarFormal(self, ctx: CoolParser.FormalContext):

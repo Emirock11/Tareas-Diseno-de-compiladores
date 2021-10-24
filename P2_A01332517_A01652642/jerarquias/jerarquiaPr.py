@@ -17,20 +17,6 @@ class PreJerarquia(CoolListener):
 
         self.setClasesBase()
 
-    def ingresarMethod(self, ctx: CoolParser.MethodContext):
-        struct.ctxTypes[ctx] = ctx.TYPE().getText()
-
-    def salirMethod(self, ctx: CoolParser.MethodContext):
-        ID = ctx.ID().getText()
-        type = ctx.TYPE().getText()
-        formals = ctx.formal()
-        listaPar = []
-        for formal in formals:
-            listaPar.append((formal.ID().getText(), struct.ctxTypes[formal]))
-        self.claseActual.addMethod(ID, struct.Method(type, listaPar))
-        ctx.namemethod = ID
-        ctx.typemethod = type
-
     def ingresarClass(self, ctx: CoolParser.KlassContext):
         _types = ctx.TYPE()
         className = _types[0].getText()
@@ -56,6 +42,20 @@ class PreJerarquia(CoolListener):
         _klass = struct.Klass(className)
         self.claseActual = _klass
     
+    def ingresarMethod(self, ctx: CoolParser.MethodContext):
+        struct.ctxTypes[ctx] = ctx.TYPE().getText()
+
+    def salirMethod(self, ctx: CoolParser.MethodContext):
+        ID = ctx.ID().getText()
+        type = ctx.TYPE().getText()
+        formals = ctx.formal()
+        listaPar = []
+        for formal in formals:
+            listaPar.append((formal.ID().getText(), struct.ctxTypes[formal]))
+        self.claseActual.addMethod(ID, struct.Method(type, listaPar))
+        ctx.namemethod = ID
+        ctx.typemethod = type
+
     def ingresarAtribute(self, ctx: CoolParser.AtributeContext):
         _id = ctx.ID().getText()
         _type = ctx.TYPE().getText()
