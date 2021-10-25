@@ -1,4 +1,4 @@
-# Generated from h:\Documentos\Escuela\Diseño de compiladores\Git\proyecto_etapa1y2\proyecto_etapa1y2\antlr\Cool.g4 by ANTLR 4.9.2
+# Generated from h:\Documentos\Escuela\Diseño de compiladores\Tareas\proyecto_etapa1y2_A01332517_A01652642\antlr\Cool.g4 by ANTLR 4.9.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .CoolParser import CoolParser
