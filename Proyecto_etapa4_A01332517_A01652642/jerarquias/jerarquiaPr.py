@@ -19,8 +19,8 @@ class PreJerarquia(CoolListener):
         self.setClasesBase()
 
     def ingresarClass(self, ctx: CoolParser.KlassContext):
-        print("ingresarClass()")
-        time.sleep(1)
+        #print("ingresarClass()")
+        #time.sleep(1)
         types = ctx.TYPE()
         className = types[0].getText()
 
@@ -46,13 +46,13 @@ class PreJerarquia(CoolListener):
         self.claseActual = _klass
     
     def ingresarMethod(self, ctx: CoolParser.MethodContext):
-        print("ingresarMethod()")
-        time.sleep(1)
+        #print("ingresarMethod()")
+        #time.sleep(1)
         struct.ctxTypes[ctx] = ctx.TYPE().getText()
 
     def salirMethod(self, ctx: CoolParser.MethodContext):
-        print("salirMethod()")
-        time.sleep(1)
+        #print("salirMethod()")
+        #time.sleep(1)
         ID = ctx.ID().getText()
         type = ctx.TYPE().getText()
         formals = ctx.formal()
@@ -64,8 +64,8 @@ class PreJerarquia(CoolListener):
         ctx.typemethod = type
 
     def ingresarAtribute(self, ctx: CoolParser.AtributeContext):
-        print("ingresarAtribute()")
-        time.sleep(1)
+        #print("ingresarAtribute()")
+        #time.sleep(1)
         _id = ctx.ID().getText()
         _type = ctx.TYPE().getText()
 
@@ -75,8 +75,8 @@ class PreJerarquia(CoolListener):
         self.claseActual.addAttribute(_id, _type)
 
     def salirPrograma(self, ctx: CoolParser.ProgramContext):
-        print("salirPrograma()")
-        time.sleep(1)
+        #print("salirPrograma()")
+        #time.sleep(1)
         try:
             struct.lookupClass('Main').lookupMethod('main')
         except KeyError as e:
@@ -97,8 +97,8 @@ class PreJerarquia(CoolListener):
             _new_klass.methods = _prev_methods
     
     def salirFormal(self, ctx: CoolParser.FormalContext):
-        print("salirFormal()")
-        time.sleep(1)
+        #print("salirFormal()")
+        #time.sleep(1)
         _type = ctx.TYPE().getText()
         struct.ctxTypes[ctx] = _type
         ctx.typename = _type

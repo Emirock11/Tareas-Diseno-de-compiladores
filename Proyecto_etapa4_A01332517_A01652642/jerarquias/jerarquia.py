@@ -10,8 +10,8 @@ class Grarquia(CoolListener):
         self.idsTypes = None
 
     def ingresarClass(self, ctx: CoolParser.KlassContext):
-        print("ingresarClase()")
-        time.sleep(1)
+        #print("ingresarClase()")
+        ##time.sleep(1)
         className = ctx.TYPE()[0].getText()
         ctx.nameklass = className
         _klass = struct.lookupClass(className)
@@ -22,13 +22,13 @@ class Grarquia(CoolListener):
         self.idsTypes['self'] = 'self'
     
     def salirClass(self, ctx: CoolParser.KlassContext):
-        print("salirClase()")
-        time.sleep(1)
+        #print("salirClase()")
+        #time.sleep(1)
         self.idsTypes.closeScope()
 
     def ingresarAtribute(self, ctx: CoolParser.AtributeContext):
-        print("IngresarAtributo")
-        time.sleep(1)
+        #print("IngresarAtributo")
+        #time.sleep(1)
         ID = ctx.ID().getText()
         _type = ctx.TYPE().getText()
 
@@ -54,13 +54,13 @@ class Grarquia(CoolListener):
         self.idsTypes.openScope()
     
     def salirAtribute(self, ctx: CoolParser.AtributeContext):
-        print("salirAtribute")
-        time.sleep(1)
+        #print("salirAtribute")
+        #time.sleep(1)
         self.idsTypes.closeScope()
 
     def ingresarMethod(self, ctx: CoolParser.MethodContext):
-        print("ingresarMethod")
-        time.sleep(1)
+        #print("ingresarMethod")
+        #time.sleep(1)
         metodo = ctx.ID().getText()
         _inherits = self.idsTypes.klass.inherits
         if _inherits:
@@ -86,8 +86,8 @@ class Grarquia(CoolListener):
             self.idsTypes[_formal.ID().getText()] = _formal.TYPE().getText()
     
     def salirMethod(self, ctx: CoolParser.MethodContext):
-        print("salirMethod")
-        time.sleep(1)
+        #print("salirMethod")
+        #time.sleep(1)
         expr = ctx.expr() 
         _type = ctx.TYPE().getText()
 
@@ -113,8 +113,8 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def ingresarFormal(self, ctx: CoolParser.FormalContext):
-        print("ingresarFormal")
-        time.sleep(1)
+        #print("ingresarFormal")
+        #time.sleep(1)
         ID = ctx.ID().getText()
         _type = ctx.TYPE().getText()
         if ID == 'self':
@@ -125,21 +125,21 @@ class Grarquia(CoolListener):
         
     
     def salirBase(self, ctx: CoolParser.BaseContext):
-        print("salirBase")
-        time.sleep(1)
+        #print("salirBase")
+        #time.sleep(1)
         _type = struct.ctxTypes[ctx.getChild(0)]
         struct.ctxTypes[ctx] = _type
         ctx.typename = _type
 
     def ingresarIf(self, ctx: CoolParser.IfContext):
-        print("ingresarIf")
-        time.sleep(1)
+        #print("ingresarIf")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
     
     def salirIf(self, ctx: CoolParser.IfContext):
-        print("salirIf")
-        time.sleep(1)
+        #print("salirIf")
+        #time.sleep(1)
         _trueType = struct.ctxTypes[ctx.expr()[1]]
         _falseType = struct.ctxTypes[ctx.expr()[2]]
 
@@ -153,14 +153,14 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
     
     def ingresarWhile(self, ctx: CoolParser.WhileContext):
-        print("ingresarWhile")
-        time.sleep(1)
+        #print("ingresarWhile")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
     
     def salirWhile(self, ctx: CoolParser.WhileContext):
-        print("salirWhile")
-        time.sleep(1)
+        #print("salirWhile")
+        #time.sleep(1)
         if struct.ctxTypes[ctx.expr()[0]] != 'Bool':
             raise myexceptions.TypeCheckMismatch
         
@@ -170,8 +170,8 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
     
     def ingresarLet(self, ctx: CoolParser.LetContext):
-        print("ingresarLet")
-        time.sleep(1)
+        #print("ingresarLet")
+        #time.sleep(1)
         di = ctx.ID()
         types = ctx.TYPE()
         for i in range(len(di)-1, -1, -1):
@@ -182,8 +182,8 @@ class Grarquia(CoolListener):
             self.idsTypes[di[i].getText()] = types[i].getText()
     
     def salirLet(self, ctx: CoolParser.LetContext):
-        print("salirLet")
-        time.sleep(1)
+        #print("salirLet")
+        #time.sleep(1)
         types = ctx.TYPE()
         expr = ctx.expr()
 
@@ -202,8 +202,8 @@ class Grarquia(CoolListener):
             self.idsTypes.closeScope()
 
     def ingresarCase(self, ctx: CoolParser.CaseContext):
-        print("ingresarCase")
-        time.sleep(1)
+        #print("ingresarCase")
+        #time.sleep(1)
         di = ctx.ID()
         types = ctx.TYPE()
 
@@ -227,33 +227,33 @@ class Grarquia(CoolListener):
         self.idsTypes.openScope()
     
     def salirCase(self, ctx: CoolParser.CaseContext):
-        print("salirCase")
-        time.sleep(1)
+        #print("salirCase")
+        #time.sleep(1)
         self.idsTypes.closeScope()
     
     def ingresarNew(self, ctx: CoolParser.NewContext):
-        print("ingresarNew")
-        time.sleep(1)
+        #print("ingresarNew")
+        #time.sleep(1)
         self.idsTypes.openScope()
     
     def salirNew(self, ctx: CoolParser.NewContext):
-        print("salirNew")
-        time.sleep(1)
+        #print("salirNew")
+        #time.sleep(1)
         _type = ctx.TYPE().getText()
         struct.ctxTypes[ctx] = _type
         ctx.typename = _type
         self.idsTypes.closeScope()
     
     def ingresarBlock(self, ctx: CoolParser.BlockContext):
-        print("ingresarBlock")
-        time.sleep(1)
+        #print("ingresarBlock")
+        #time.sleep(1)
         expr = ctx.expr()
         for _ex in expr:
             self.idsTypes.openScope()
 
     def salirBlock(self, ctx: CoolParser.BlockContext):
-        print("salirBlock")
-        time.sleep(1)
+        #print("salirBlock")
+        #time.sleep(1)
         expr = ctx.expr()
         _last = struct.ctxTypes[expr[len(expr) - 1]]
         struct.ctxTypes[ctx] = _last
@@ -262,15 +262,15 @@ class Grarquia(CoolListener):
             self.idsTypes.closeScope()
     
     def ingresarCall(self, ctx: CoolParser.CallContext):
-        print("ingresarCall")
-        time.sleep(1)
+        #print("ingresarCall")
+        #time.sleep(1)
         expr = ctx.expr()
         for _ex in expr:
             self.idsTypes.openScope()
         
     def salirCall(self, ctx: CoolParser.CallContext):
-        print("salirCall")
-        time.sleep(1)
+        #print("salirCall")
+        #time.sleep(1)
         ID = ctx.ID().getText()
         expr = ctx.expr()
 
@@ -331,15 +331,15 @@ class Grarquia(CoolListener):
             self.idsTypes.closeScope()
         
     def ingresarAt(self, ctx: CoolParser.AtContext):
-        print("ingresarAt")
-        time.sleep(1)
+        #print("ingresarAt")
+        #time.sleep(1)
         expr = ctx.expr()
         for _ex in expr:
             self.idsTypes.openScope()
 
     def salirAt(self, ctx: CoolParser.AtContext):
-        print("salirAt")
-        time.sleep(1)
+        #print("salirAt")
+        #time.sleep(1)
         ID = ctx.ID().getText()
         expr = ctx.expr()
         _type = ctx.TYPE().getText()
@@ -361,13 +361,13 @@ class Grarquia(CoolListener):
             self.idsTypes.closeScope()
     
     def ingresarN(self, ctx: CoolParser.NegContext):
-        print("ingresarN")
-        time.sleep(1)
+        #print("ingresarN")
+        #time.sleep(1)
         self.idsTypes.openScope()
 
     def salirN(self, ctx: CoolParser.NegContext):
-        print("salirN")
-        time.sleep(1)
+        #print("salirN")
+        #time.sleep(1)
         expr = ctx.expr()
         if struct.ctxTypes[ctx.expr()] == 'Int':
             struct.ctxTypes[ctx] = 'Int'
@@ -375,25 +375,25 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
     
     def ingresarVoid(self, ctx: CoolParser.IsvoidContext):
-        print("ingresarVoid")
-        time.sleep(1)
+        #print("ingresarVoid")
+        #time.sleep(1)
         self.idsTypes.openScope()
     
     def salirVoid(self, ctx: CoolParser.IsvoidContext):
-        print("salirVoid")
-        time.sleep(1)
+        #print("salirVoid")
+        #time.sleep(1)
         struct.ctxTypes[ctx] = 'Bool'
         self.idsTypes.closeScope()
     
     def ingresarMult(self, ctx: CoolParser.MultContext):
-        print("ingresarMult")
-        time.sleep(1)
+        #print("ingresarMult")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
 
     def salirMult(self, ctx: CoolParser.MultContext):
-        print("salirMult")
-        time.sleep(1)
+        #print("salirMult")
+        #time.sleep(1)
         izquierda = ctx.getChild(0)
         derecha = ctx.getChild(2)
         if (struct.ctxTypes[izquierda] != 'Int' or struct.ctxTypes[derecha] != 'Int'):
@@ -406,14 +406,14 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def ingresarDiv(self, ctx: CoolParser.DivContext):
-        print("ingresarDiv")
-        time.sleep(1)
+        #print("ingresarDiv")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
 
     def salirDiv(self, ctx: CoolParser.DivContext):
-        print("salirDiv")
-        time.sleep(1)
+        #print("salirDiv")
+        #time.sleep(1)
         izquierda = ctx.getChild(0)
         derecha = ctx.getChild(2)
         if (struct.ctxTypes[izquierda] != 'Int' or struct.ctxTypes[derecha] != 'Int'):
@@ -426,14 +426,14 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def ingresarSuma(self, ctx: CoolParser.AddContext):
-        print("ingresarSuma")
-        time.sleep(1)
+        #print("ingresarSuma")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
 
     def salirSuma(self, ctx: CoolParser.AddContext):
-        print("salirSuma")
-        time.sleep(1)
+        #print("salirSuma")
+        #time.sleep(1)
         izquierda = ctx.getChild(0)
         derecha = ctx.getChild(2)
         if (struct.ctxTypes[izquierda] != 'Int' or struct.ctxTypes[derecha] != 'Int'):
@@ -446,14 +446,14 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def ingresarResta(self, ctx: CoolParser.SubContext):
-        print("ingresarResta")
-        time.sleep(1)
+        #print("ingresarResta")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
 
     def salirResta(self, ctx: CoolParser.SubContext):
-        print("salirResta")
-        time.sleep(1)
+        #print("salirResta")
+        #time.sleep(1)
         izquierda = ctx.getChild(0)
         derecha = ctx.getChild(2)
         if (struct.ctxTypes[izquierda] != 'Int' or struct.ctxTypes[derecha] != 'Int'):
@@ -466,14 +466,14 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def IngresarLt(self, ctx: CoolParser.LtContext):
-        print("IngresarLt")
-        time.sleep(1)
+        #print("IngresarLt")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
 
     def salirLt(self, ctx: CoolParser.LtContext):
-        print("salirLt")
-        time.sleep(1)
+        #print("salirLt")
+        #time.sleep(1)
         izquierda = ctx.getChild(0)
         derecha = ctx.getChild(2)
         if (struct.ctxTypes[izquierda] != 'Int' or struct.ctxTypes[derecha] != 'Int'):
@@ -486,14 +486,14 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def ingresarLe(self, ctx: CoolParser.LeContext):
-        print("ingresarLe")
-        time.sleep(1)
+        #print("ingresarLe")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
         
     def salirLe(self, ctx: CoolParser.LeContext):
-        print("salirLe")
-        time.sleep(1)
+        #print("salirLe")
+        #time.sleep(1)
         izquierda = ctx.getChild(0)
         derecha = ctx.getChild(2)
         if (struct.ctxTypes[izquierda] != 'Int' or struct.ctxTypes[derecha] != 'Int'):
@@ -506,14 +506,14 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def ingresarEq(self, ctx: CoolParser.EqContext):
-        print("ingresarEq")
-        time.sleep(1)
+        #print("ingresarEq")
+        #time.sleep(1)
         self.idsTypes.openScope()
         self.idsTypes.openScope()
 
     def salirEq(self, ctx: CoolParser.EqContext):
-        print("salirEq")
-        time.sleep(1)
+        #print("salirEq")
+        #time.sleep(1)
         expr = ctx.expr()
         izquierda = struct.ctxTypes[expr[0]]
         derecha = struct.ctxTypes[expr[1]]
@@ -529,13 +529,13 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def ingresarNot(self, ctx: CoolParser.NotContext):
-        print("ingresarNot")
-        time.sleep(1)
+        #print("ingresarNot")
+        #time.sleep(1)
         self.idsTypes.openScope()
 
     def salirNot(self, ctx: CoolParser.NotContext):
-        print("salirNot")
-        time.sleep(1)
+        #print("salirNot")
+        #time.sleep(1)
         if struct.ctxTypes[ctx.expr()] == 'Bool':
             struct.ctxTypes[ctx] = 'Bool'
             ctx.typename = 'Bool'
@@ -543,8 +543,8 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def ingresarAssign(self, ctx: CoolParser.AssignContext):
-        print("ingresarAssign")
-        time.sleep(1)
+        #print("ingresarAssign")
+        #time.sleep(1)
         if ctx.ID().getText() == 'self':
             raise myexceptions.SelfAssignmentException
         
@@ -552,8 +552,8 @@ class Grarquia(CoolListener):
     
 
     def salirAssign(self, ctx: CoolParser.AssignContext):
-        print("salirAssign")
-        time.sleep(1)
+        #print("salirAssign")
+        #time.sleep(1)
         IDType = self.idsTypes[ctx.ID().getText()]
         exprType = struct.ctxTypes[ctx.expr()]
         IDClass = struct.lookupClass(IDType)
@@ -567,15 +567,15 @@ class Grarquia(CoolListener):
         self.idsTypes.closeScope()
 
     def salirParens(self, ctx: CoolParser.ParensContext):
-        print("salirParens")
-        time.sleep(1)
+        #print("salirParens")
+        #time.sleep(1)
         _type = struct.ctxTypes[ctx.expr()]
         struct.ctxTypes[ctx] = _type
         ctx.typename = _type
 
     def salirObject(self, ctx: CoolParser.ObjectContext):
-        print("salirObject")
-        time.sleep(1)
+        #print("salirObject")
+        #time.sleep(1)
         ID = ctx.ID().getText()
 
         try:
@@ -586,20 +586,20 @@ class Grarquia(CoolListener):
             raise myexceptions.UndeclaredIdentifier
     
     def salirInt(self, ctx: CoolParser.IntegerContext):
-        print("salirInt")
-        time.sleep(1)
+        #print("salirInt")
+        #time.sleep(1)
         struct.ctxTypes[ctx] = 'Int'
         ctx.truevalue = ctx.INTEGER().getText()
         ctx.typename = 'Int'
     
     def salirString(self, ctx: CoolParser.StringContext):
-        print("salirString")
-        time.sleep(1)
+        #print("salirString")
+        #time.sleep(1)
         struct.ctxTypes[ctx] = 'String'
         ctx.typename = 'String'
     
     def salirBool(self, ctx: CoolParser.BoolContext):
-        print("salirBool")
-        time.sleep(1)
+        #print("salirBool")
+        ##time.sleep(1)
         struct.ctxTypes[ctx] = 'Bool'
         ctx.typename = 'Bool'
