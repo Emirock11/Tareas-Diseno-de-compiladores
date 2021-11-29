@@ -2,10 +2,13 @@ from antlr4 import *
 from antlr.CoolLexer import *
 from antlr.CoolParser import *
 from antlr.CoolListener import *
-
+import structure
+from jerarquias.jerarquia import Grarquia
+from jerarquias.jerarquiaPr import PreJerarquia
 import sys
 from string import Template
 import asm
+import math
 
 class Output:
     def __init__(self):
@@ -37,7 +40,9 @@ class Output:
         return self.accum
 
 def global_data(o):
-        k = dict(intTag=0, boolTag=0, stringTag=0)
+    # tags de las clases predefinidas, seccion fija
+        k = dict(intTag=3, boolTag=4, stringTag=5)
+        # Libreria de templates de python + Se realiza la sustitucion de los tags + Libreria de templates str2
         o.accum = asm.gdStr1 + asm.gdTpl1.substitute(k) + asm.gdStr2
 
 def constants(o):
@@ -59,13 +64,42 @@ def constants(o):
             - tamanio del objeto: [tag, tamanio, ptr al dispTab y contenido] = 4 words
             - valor
     """
+    # Obtencion de las clases del archivo...
+    allClases = structure.allClasses.keys()
+    # Obtención de los strings del archivo
+    allStrings = structure.valuesString
+    # diccionario a lista
+    allClases = list(allClases)
+    i = 0
+    # extraemos SELF_TYPE de la lista
+    while True:
+        if i == len(allClases)-1:
+            break
+        elif allClases[i] == "SELF_TYPE":
+            allClases.pop(i)
+            break
+        i+=1
+
+    print(allStrings)
+    
+    # Obtener constantes numericas necesarias
+    for Class in allClases:
+        str_obj_size = 4 + math.ceil((len(Class) + 1) / 4)
+        str_size = len(Class)
+        print("Class: %s - objSize: %i - strSize: %i" % (Class, str_obj_size, str_size))
+
+
+    print("Todas las clases:")
+    print(allClases)
+    
 
     ### POR EJEMPLO (CAMBIAR)
-    o.accum += asm.cTplStr.substitute(idx=3, tag=2, size=23, sizeIdx=2, value='hola mundo')
-    o.accum += asm.cTplInt.substitute(idx=5, tag=12, value=340)
+    #o.accum += asm.cTplStr.substitute(idx=3, tag=2, size=23, sizeIdx=2, value='hola mundo')
+    #o.accum += asm.cTplInt.substitute(idx=5, tag=12, value=340)
+
 
     # Siempre incluir los bool
-    o.accum += asm.boolStr
+    #o.accum += asm.boolStr
 
 def tables(o):
     """
@@ -134,28 +168,36 @@ def class_inits(o):
 
 
 def genCode():
+    # Secciones de la estructura de un archivo ensamblador
     o = Output()
+    # Segmento de datos
     global_data(o)
+    # Por hacer... INICIO
+    # Se emiten los constantes
     constants(o)
-    tables(o)
-    templates(o)
+    #   tables(o)
+    #   templates(o)
+    # Por hacer... FIN
+    # Apuntador
     heap(o)
+    # Segmento de texto (Expresiones)
     global_text(o)
 
     # Aquí enviar a un archivo, etc.
-    print(o.out())
+    #print(o.out())
     
 if __name__ == '__main__':
     # Ejecutar como: "python codegen.py <filename>" donde filename es el nombre de alguna de las pruebas
     #parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("../resources/codegen/input/%s.cool" % sys.argv[1]))))
-    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("../resources/codegen/input/%s.cool" % ("abort")))))
+    parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("resources/codegen/input/%s.cool" % ("fact")))))
+    
     walker = ParseTreeWalker()
     tree = parser.program()
 
     # Poner aquí los listeners necesarios para recorrer el árbol y obtener los datos
     # que requiere el generador de código
-    #walker.walk(Listener1(), tree)
-    #walker.walk(Listener2(), tree)
+    walker.walk(PreJerarquia(), tree)
+    walker.walk(Grarquia(), tree)
 
     # Pasar parámetros al generador de código 
     genCode()

@@ -1,0 +1,6 @@
+#name resources/scanner/input/simplestrings.cool
+#1 StrConst "this is a string"
+#1 StrConst "so is this"
+#2 StrConst "one more string"
+#4 StrConst "strings can have keywords inside: if else case"
+#5 StrConst "!@#$%^&*()_+1234567890-=\tjustanother string   "

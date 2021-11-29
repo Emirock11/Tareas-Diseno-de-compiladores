@@ -1,0 +1,3 @@
+#name resources/scanner/input/s34.test.cool
+#1 ObjectId "before_it"
+#4 ERROR Unterminated string constant, EOL found.

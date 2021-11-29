@@ -9,12 +9,25 @@ from myexceptions import *
 from jerarquias.jerarquiaPr import PreJerarquia
 from jerarquias.jerarquia import Grarquia
 
+
+
 def parseAndCompare(caseName):
     parser = CoolParser(CommonTokenStream(CoolLexer(FileStream("input/semantic/%s.cool" % caseName))))
     tree = parser.program()
     walker = ParseTreeWalker()
     walker.walk(PreJerarquia(), tree)
     walker.walk(Grarquia(), tree)
+
+    #treePrinter = TreePrinter({})
+    #walker.walk(treePrinter, tree)
+    #output = treePrinter.getOutput()
+
+    #expected = output.split('\n')
+    #with open('expected/semantic/%s.txt' % caseName) as f:
+    #    for line1, line2 in zip(f, expected):
+    #        if line1[:-1] != line2:
+    #            print ("Diferencia!!! [%s]-[%s]" % (line1, line2))
+    #            return False
     
     return True
 

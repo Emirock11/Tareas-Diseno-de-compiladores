@@ -1,0 +1,12 @@
+#name resources/scanner/input/multilinecomment.cool
+#3 Not "not"
+#3 In "in"
+#3 ObjectId "a"
+#3 ObjectId "comment"
+#10 Lparen "("
+#10 Mult "*"
+#10 Not "not"
+#10 ObjectId "a"
+#10 ObjectId "comment"
+#10 Mult "*"
+#10 Rparen ")"

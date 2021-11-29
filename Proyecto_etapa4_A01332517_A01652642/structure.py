@@ -2,6 +2,8 @@ from collections import MutableMapping, OrderedDict
 import unittest
 
 allClasses = {}
+valuesInt = []
+valuesString = []
 
 class HierarchyException(Exception):
     pass

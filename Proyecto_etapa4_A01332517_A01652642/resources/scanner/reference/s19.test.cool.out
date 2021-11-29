@@ -1,0 +1,4 @@
+#name resources/scanner/input/s19.test.cool
+#2 ERROR Unterminated string constant, EOL found.
+#3 ObjectId "d"
+#3 ERROR Unterminated string constant, EOL found.

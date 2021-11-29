@@ -1,0 +1,8 @@
+#name resources/scanner/input/s16.test.cool
+#2 IntConst "0"
+#3 IntConst "99"
+#4 IntConst "0777"
+#5 IntConst "2147483647"
+#6 IntConst "2147483648"
+#7 IntConst "012345678901234567890123456789"
+#8 IntConst "2147483647"

@@ -1,0 +1,7 @@
+#name resources/scanner/input/s04.test.cool
+#2 IntConst "0"
+#4 IntConst "1"
+#6 IntConst "2"
+#9 IntConst "3"
+#11 IntConst "4"
+#13 IntConst "5"

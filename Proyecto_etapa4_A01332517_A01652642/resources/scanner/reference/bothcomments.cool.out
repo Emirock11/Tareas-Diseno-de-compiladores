@@ -1,0 +1,12 @@
+#name resources/scanner/input/bothcomments.cool
+#2 ObjectId "what"
+#2 ObjectId "the"
+#2 ObjectId "programmer"
+#2 ObjectId "thought"
+#2 ObjectId "it"
+#2 ObjectId "was"
+#2 ERROR Unmatched *).
+#3 Dot "."
+#4 If "if"
+#4 IntConst "5"
+#4 Then "then"

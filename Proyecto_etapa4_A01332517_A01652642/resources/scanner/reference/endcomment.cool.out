@@ -1,0 +1,7 @@
+#name resources/scanner/input/endcomment.cool
+#1 TypeId "This"
+#1 ObjectId "comment"
+#1 ObjectId "was"
+#1 ObjectId "never"
+#1 ObjectId "begun"
+#1 ERROR Unmatched *).

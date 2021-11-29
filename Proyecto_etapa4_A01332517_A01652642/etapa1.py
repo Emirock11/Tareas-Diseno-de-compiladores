@@ -13,13 +13,17 @@ def parseCase(caseName):
     return parser.program()
 
 class CoolTests(unittest.TestCase):
-    def setUp(self): 
+    def setUp(self):
+        # Mandando a llamar el walker del API de ANTLR 
         self.walker = ParseTreeWalker()
 
     def test1(self): 
         tree = parseCase("nomain")
         with self.assertRaises(NoMainException):
+            # Primero, la pre-jerarquia...
             self.walker.walk(PreJerarquia(), tree)
+            # Despues de establecer la pre-jerarquia o el contexto del listener
+            # se realiza la gerarquia de todo el archivo
             self.walker.walk(Grarquia(), tree)
 
     def test2(self):

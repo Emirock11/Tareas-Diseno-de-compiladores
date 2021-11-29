@@ -1,0 +1,6 @@
+#name resources/scanner/input/escapedunprintables.cool
+#1 StrConst "This is a tab:\t"
+#2 StrConst "This is a backspace:\b"
+#3 StrConst "This is a formfeed:\f"
+#4 StrConst "This is a carriage return:\015"
+#6 StrConst "This is an escape:\033"

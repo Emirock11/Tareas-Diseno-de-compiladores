@@ -39,12 +39,6 @@ expr
     | expr EQUAL expr                                          #eq
     | NOT expr                                                 #not
     | <assoc=right> ID ASSIGN expr                             #asgn
-    | LPAR expr RPAR                                           #par
-    | ID                                                       #ID
-    | INTEGER                                                  #int
-    | STRING                                                   #String
-    | TRUE                                                     #true
-    | FALSE                                                    #false
     ;
 
 case_stat
