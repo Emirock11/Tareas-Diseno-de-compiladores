@@ -51,7 +51,7 @@ def constants(o):
         1.1 Obtener lista de literales (a cada una asignar un índice) + nombres de las clases
         1.2 Determinar constantes numéricas necesarias
         1.3 Reemplazar en el template:
-            - tag
+            - tag = tipo de dato
             - tamanio del objeto: [tag, tamanio, ptr al dispTab, ptr al int, (len(contenido)+1)%4] = ? 
                 (el +1 es por el 0 en que terminan siempre)
             - índice del ptr al int
@@ -64,10 +64,52 @@ def constants(o):
             - tamanio del objeto: [tag, tamanio, ptr al dispTab y contenido] = 4 words
             - valor
     """
-    # Obtencion de las clases del archivo...
-    allClases = structure.allClasses.keys()
+    
     # Obtención de los strings del archivo
     allStrings = structure.valuesString
+    allInts = structure.valuesInt
+    
+
+    print(allStrings)
+    
+    # Generar un string y un entero correspondiente estatico al tamanio del string
+    
+    # Obtener constantes numericas necesarias
+    i=0
+    for string in allStrings:
+        sizeobjt = 4 + math.ceil((len(string) + 1) % 4)
+        sizeStr = len(string)
+        o.accum += asm.cTplStr.substitute(idx=i, tag=5, size=sizeobjt, sizeIdx=sizeStr, value=string)
+        i+=1
+    i=0
+
+    for int in allInts:
+        o.accum += asm.cTplInt.substitute(idx=i, tag=3, value=int)
+        i+=1
+
+    # Siempre incluir los bool
+    o.accum += asm.boolStr
+
+    ### POR EJEMPLO (CAMBIAR)
+    #o.accum += asm.cTplStr.substitute(idx=3, tag=2, size=23, sizeIdx=2, value='hola mundo')
+    #o.accum += asm.cTplInt.substitute(idx=5, tag=12, value=340)
+
+
+    
+
+def tables(o):
+    """
+    1. class_nameTab: tabla para los nombres de las clases en string
+        1.1 Los objetos ya fueron generados arriba
+        1.2 El tag de cada clase indica el desplazamiento desde la etiqueta class_nameTab
+    2. class_objTab: prototipos (templates) y constructores para cada objeto
+        2.1 Indexada por tag: en 2*tag está el protObj, en 2*tag+1 el init
+    3. dispTab para cada clase
+        3.1 Listado de los métodos en cada clase considerando herencia
+"""
+
+    # Obtencion de las clases del archivo...
+    allClases = structure.allClasses.keys()
     # diccionario a lista
     allClases = list(allClases)
     i = 0
@@ -80,41 +122,15 @@ def constants(o):
             break
         i+=1
 
-    print(allStrings)
-    
-    # Obtener constantes numericas necesarias
+    i = 3
+    o.p('class_nameTab')
+
     for Class in allClases:
-        str_obj_size = 4 + math.ceil((len(Class) + 1) / 4)
-        str_size = len(Class)
-        print("Class: %s - objSize: %i - strSize: %i" % (Class, str_obj_size, str_size))
+        o.p('.word', Class)
 
-
-    print("Todas las clases:")
-    print(allClases)
-    
-
-    ### POR EJEMPLO (CAMBIAR)
-    #o.accum += asm.cTplStr.substitute(idx=3, tag=2, size=23, sizeIdx=2, value='hola mundo')
-    #o.accum += asm.cTplInt.substitute(idx=5, tag=12, value=340)
-
-
-    # Siempre incluir los bool
-    #o.accum += asm.boolStr
-
-def tables(o):
-    """
-    1. class_nameTab: tabla para los nombres de las clases en string
-        1.1 Los objetos ya fueron generados arriba
-        1.2 El tag de cada clase indica el desplazamiento desde la etiqueta class_nameTab
-    2. class_objTab: prototipos (templates) y constructores para cada objeto
-        2.1 Indexada por tag: en 2*tag está el protObj, en 2*tag+1 el init
-    3. dispTab para cada clase
-        3.1 Listado de los métodos en cada clase considerando herencia
-"""
     #Ejemplo (REEMPLAZAR):
 
-    o.p('class_nameTab')
-    o.p('.word', 'str_const3')
+    # Objeto pero en ceros, la plantilla
 
     o.p('class_objTab')
     o.p('.word', 'Object_protObj')
@@ -175,7 +191,7 @@ def genCode():
     # Por hacer... INICIO
     # Se emiten los constantes
     constants(o)
-    #   tables(o)
+    tables(o)
     #   templates(o)
     # Por hacer... FIN
     # Apuntador
